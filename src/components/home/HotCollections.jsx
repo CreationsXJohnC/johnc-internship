@@ -20,6 +20,8 @@ const HotCollections = () => {
     slidesToScroll: 1,
   }
 
+  useState(() => )
+
   useEffect(() => {
     main();
   }, []);
@@ -36,7 +38,7 @@ const HotCollections = () => {
           </div>
           <Slider {...settings}>
           { hotCollectionsData.map((hotCollection, index) => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+            <div className="px-2" key={index}>
               <div className="nft_coll">
                 <div className="nft_wrap">
                   <Link to="/item-details">
