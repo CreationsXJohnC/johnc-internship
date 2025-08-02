@@ -45,7 +45,7 @@ const NewItems = () => {
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link
-                    to={newItems.authorId}
+                    to={`/author/${newItems.authorId}`}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title={newItems.title}
@@ -75,7 +75,7 @@ const NewItems = () => {
                     </div>
                   </div>
 
-                  <Link to="/item-details">
+                  <Link to={`/item-details/${newItems.nftId}`}>
                     <img
                       src={newItems.nftImage}
                       className="lazy nft__item_preview"
