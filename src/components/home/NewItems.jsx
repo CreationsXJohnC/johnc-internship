@@ -5,6 +5,7 @@ import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
 import Slider from "react-slick";
 import Skeleton from "../UI/Skeleton";
+import Timer from "../UI/Timer";
 
 const NewItems = () => {
   const [ loading, setLoading ] = useState(false)
@@ -13,6 +14,7 @@ const NewItems = () => {
     setLoading(true)
     const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
     setLoading(false)
+    console.log(response.data)
     setNewItemsData(response.data)
   }
 
@@ -39,7 +41,7 @@ const NewItems = () => {
           </div>
           { !loading && <Slider {...settings}>
           {newItemsData.map((newItems, index) => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+            <div className="px-2" key={index}>
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link
@@ -48,11 +50,11 @@ const NewItems = () => {
                     data-bs-placement="top"
                     title={newItems.title}
                   >
-                    <img className="lazy" src={newItems.AuthorImage} alt="" />
+                    <img className="lazy" src={newItems.authorImage} alt="" />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
-                <div className="de_countdown">5h 30m 32s</div>
+                {newItems.expiryDate && <Timer expiryDate={newItems.expiryDate} />}
 
                 <div className="nft__item_wrap">
                   <div className="nft__item_extra">
@@ -88,13 +90,30 @@ const NewItems = () => {
                   <div className="nft__item_price">{newItems.price} ETH</div>
                   <div className="nft__item_like">
                     <i className="fa fa-heart"></i>
-                    <span>69</span>
+                    <span>{newItems.likes}</span>
                   </div>
                 </div>
               </div>
             </div>
           ))}
           </Slider> }
+          { loading && new Array(4).fill(0).map((_, index) => (
+            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
+            <div className="nft_coll">
+              <div className="nft_wrap">
+                <Skeleton width="100%" height="100%" />
+              </div>
+              <div className="nft_coll_pp">
+                <Skeleton width="60px" height="60px" borderRadius="50%" />
+                <i className="fa fa-check"></i>
+              </div>
+              <div className="nft_coll_info">
+                <h4><Skeleton height="20px" width="40%" /></h4>
+                <Skeleton height="20px" width="20%" />
+              </div>
+            </div>
+          </div>
+          )) }
         </div>
       </div>
     </section>
