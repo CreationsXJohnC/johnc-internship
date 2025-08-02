@@ -3,14 +3,24 @@ import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
+import Slider from "react-slick";
+import Skeleton from "../UI/Skeleton";
 
 const NewItems = () => {
+  const [ loading, setLoading ] = useState(false)
   const [ newItemsData, setNewItemsData ] = useState([])
-
   async function main() {
+    setLoading(true)
     const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems")
+    setLoading(false)
     setNewItemsData(response.data)
-    console.log(response.data)
+  }
+
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
   }
 
   useEffect(() => {
@@ -27,6 +37,7 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+          { !loading && <Slider {...settings}>
           {newItemsData.map((newItems, index) => (
             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
               <div className="nft__item">
@@ -74,7 +85,7 @@ const NewItems = () => {
                   <Link to="/item-details">
                     <h4>{newItems.title}</h4>
                   </Link>
-                  <div className="nft__item_price">{newItems.price}</div>
+                  <div className="nft__item_price">{newItems.price} ETH</div>
                   <div className="nft__item_like">
                     <i className="fa fa-heart"></i>
                     <span>69</span>
@@ -83,6 +94,7 @@ const NewItems = () => {
               </div>
             </div>
           ))}
+          </Slider> }
         </div>
       </div>
     </section>
