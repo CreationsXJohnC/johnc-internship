@@ -9,6 +9,7 @@ import Timer from "../UI/Timer";
 const ExploreItems = () => {
   const [ loading, setLoading ] = useState(false)
   const [ exploreItems, setExploreItems ] = useState([])
+  const [ filteredItems, setFilteredItems ] = useState([]) 
   const [ exploreLoadItems, setExploreLoadItems ] = useState(8) 
   async function main() {
     setLoading(true)
@@ -16,22 +17,31 @@ const ExploreItems = () => {
     setLoading(false)
     console.log(response.data)
     setExploreItems(response.data)
+    setFilteredItems(response.data)
   }
 
   function LoadMoreBtn() {
     setExploreLoadItems(prev => prev + 4)
   }
 
-const exploreItems = ({ exploreFilterItems: exploreItems }) => {
-  const [exploreFilterItems, setExploreItems] = useState(exploreItems);
-}
-
-  function exploreItems(filter) {
-    console.log(filter)
-    if (filter === 'price_low_to_high') {
-      setExploreItems(exploreFilterItems.slice().sort("https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter=price_low_to_high"))
+  function exploreFilterItems(filterType) {
+    setExploreLoadItems(8)
+    let sortedItems = [ ...exploreItems ]
+    if (filterType === "price_low_to_high") {
+      sortedItems.sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
     }
+    else if (filterType === "price_high_to_low") {
+      sortedItems.sort((a, b) => parseFloat(b.price) - parseFloat(a.price))
+    }
+    else if (filterType === "likes_high_to_low") {
+      sortedItems.sort((a, b) => (a.likes) - (b.likes))
+    }
+    else {
+      sortedItems = [ ...exploreItems ]
+    }
+    setFilteredItems(sortedItems)
   }
+
 
   useEffect(() => {
         main();
@@ -40,6 +50,8 @@ const exploreItems = ({ exploreFilterItems: exploreItems }) => {
   useEffect(() => {
       window.scrollTo(0, 0);
     }, []); 
+
+  const itemsToShow = filteredItems.slice(0, exploreLoadItems)
 
   return (
     <>
@@ -52,7 +64,7 @@ const exploreItems = ({ exploreFilterItems: exploreItems }) => {
         </select>
       </div>
       { !loading ? 
-      exploreItems.slice(0, exploreLoadItems).map((exploreData, index) => (
+      itemsToShow.map((exploreData, index) => (
         <div
           key={index}
           className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
