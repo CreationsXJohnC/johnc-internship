@@ -3,10 +3,11 @@ import SubHeader from "../images/subheader.jpg";
 import ExploreItems from "../components/explore/ExploreItems";
 
 const Explore = () => {
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-// Does this work?
+
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
