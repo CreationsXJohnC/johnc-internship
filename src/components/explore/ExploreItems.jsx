@@ -22,6 +22,17 @@ const ExploreItems = () => {
     setExploreLoadItems(prev => prev + 4)
   }
 
+const exploreItems = ({ exploreFilterItems: exploreItems }) => {
+  const [exploreFilterItems, setExploreItems] = useState(exploreItems);
+}
+
+  function exploreItems(filter) {
+    console.log(filter)
+    if (filter === 'price_low_to_high') {
+      setExploreItems(exploreFilterItems.slice().sort("https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter=price_low_to_high"))
+    }
+  }
+
   useEffect(() => {
         main();
       }, []);
@@ -33,7 +44,7 @@ const ExploreItems = () => {
   return (
     <>
       <div>
-        <select id="filter-items" defaultValue="">
+        <select id="filter-items" defaultValue="" onChange={(event) => exploreFilterItems(event.target.value)}>
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>
