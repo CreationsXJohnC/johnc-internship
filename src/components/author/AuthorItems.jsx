@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
+import axios from "axios";
 
 const AuthorItems = () => {
+  const [ loading, setLoading ] = useState(false)
+  const [ authorItemsData, setAuthorItemsData ] = useState([])
+  async function main() {
+    setLoading(true)
+    const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=73855012")
+    setLoading(false)
+    setAuthorItemsData(response.data)
+}
+
+  useEffect(() => {
+        main();
+      }, []);
+
   return (
     <div className="de_tab_content">
       <div className="tab-1">
@@ -13,7 +27,7 @@ const AuthorItems = () => {
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link to="">
-                    <img className="lazy" src={AuthorImage} alt="" />
+                    <img className="lazy" src={authorItemsData.authorImage} alt="" />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
@@ -37,7 +51,7 @@ const AuthorItems = () => {
                   </div>
                   <Link to="/item-details">
                     <img
-                      src={nftImage}
+                      src={authorItemsData.nftImage}
                       className="lazy nft__item_preview"
                       alt=""
                     />
@@ -45,12 +59,12 @@ const AuthorItems = () => {
                 </div>
                 <div className="nft__item_info">
                   <Link to="/item-details">
-                    <h4>Pinky Ocean</h4>
+                    <h4>{authorItemsData.authorName}</h4>
                   </Link>
-                  <div className="nft__item_price">2.52 ETH</div>
+                  <div className="nft__item_price">{authorItemsData.price} ETH</div>
                   <div className="nft__item_like">
                     <i className="fa fa-heart"></i>
-                    <span>97</span>
+                    <span>{authorItemsData.likes}</span>
                   </div>
                 </div>
               </div>
