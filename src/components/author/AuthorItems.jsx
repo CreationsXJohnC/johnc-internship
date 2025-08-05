@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
@@ -8,9 +8,10 @@ const AuthorItems = () => {
   const [ loading, setLoading ] = useState(false)
   const [ authorItemsData, setAuthorItemsData ] = useState([])
   const [ nftCollection, setNftCollection ] = useState([])
+  const {authorId} = useParams()
   async function main() {
     setLoading(true)
-    const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=73855012")
+    const response = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`)
     setLoading(false)
     setAuthorItemsData(response.data)
     setNftCollection(response.data.nftCollection)
