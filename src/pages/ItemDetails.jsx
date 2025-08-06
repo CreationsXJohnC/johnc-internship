@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import EthImage from "../images/ethereum.svg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
 import nftImage from "../images/nftImage.jpg";
 import axios from "axios";
@@ -9,9 +9,11 @@ import Skeleton from "../components/UI/Skeleton";
 const ItemDetails = () => {
   const [ loading, setLoading ] = useState(false)
   const [ itemDetails, setItemDetails ] = useState([])
+  const {nftId} = useParams()
+  const {authorId} = useParams() 
   async function main() {
     setLoading(true)
-    const response = await axios.get("https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=17914494")
+    const response = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`)
     setLoading(false)
     setItemDetails(response.data)
     console.log(response.data)
@@ -19,6 +21,7 @@ const ItemDetails = () => {
 
   useEffect(() => {
         main();
+        console.log(itemDetails)
       }, []);
 
 
@@ -62,13 +65,13 @@ const ItemDetails = () => {
                       <h6>Owner</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author">
+                          <Link to={`/author/${itemDetails.authorId}`}>
                             <img className="lazy" src={itemDetails.ownerImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to="/author">{itemDetails.ownerName}</Link>
+                          <Link to={`/author/${itemDetails.authorId}`}>{itemDetails.ownerName}</Link>
                         </div>
                       </div>
                     </div>
@@ -79,13 +82,13 @@ const ItemDetails = () => {
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author">
+                          <Link to={`/author/${itemDetails.authorId}`}>
                             <img className="lazy" src={itemDetails.creatorImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to="/author">{itemDetails.creatorName}</Link>
+                          <Link to={`/author/${itemDetails.authorId}`}>{itemDetails.creatorName}</Link>
                         </div>
                       </div>
                     </div>
