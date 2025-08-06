@@ -10,7 +10,6 @@ const ItemDetails = () => {
   const [ loading, setLoading ] = useState(false)
   const [ itemDetails, setItemDetails ] = useState([])
   const {nftId} = useParams()
-  const {authorId} = useParams() 
   async function main() {
     setLoading(true)
     const response = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`)
@@ -65,13 +64,13 @@ const ItemDetails = () => {
                       <h6>Owner</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to={`/author/${itemDetails.authorId}`}>
+                          <Link to={`/author/${itemDetails.ownerId}`}>
                             <img className="lazy" src={itemDetails.ownerImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${itemDetails.authorId}`}>{itemDetails.ownerName}</Link>
+                          <Link to={`/author/${itemDetails.ownerId}`}>{itemDetails.ownerName}</Link>
                         </div>
                       </div>
                     </div>
@@ -82,13 +81,13 @@ const ItemDetails = () => {
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to={`/author/${itemDetails.authorId}`}>
+                          <Link to={`/author/${itemDetails.creatorId}`}>
                             <img className="lazy" src={itemDetails.creatorImage} alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${itemDetails.authorId}`}>{itemDetails.creatorName}</Link>
+                          <Link to={`/author/${itemDetails.creatorId}`}>{itemDetails.creatorName}</Link>
                         </div>
                       </div>
                     </div>
