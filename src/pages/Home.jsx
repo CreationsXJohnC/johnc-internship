@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BrowseByCategory from "../components/home/BrowseByCategory";
 import HotCollections from "../components/home/HotCollections";
 import Landing from "../components/home/Landing";
@@ -13,14 +13,16 @@ const Home = () => {
 
   return (
     <div id="wrapper">
-      <div className="no-bottom no-top" id="content">
+      <div className="no-bottom no-top" id="content" data-aos="fade-down">
         <div id="top"></div>
         <Landing />
         <LandingIntro />
         <HotCollections />
         <NewItems />
         <TopSellers />
-        <BrowseByCategory />
+        <div data-aos="fade-right">
+          <BrowseByCategory />
+        </div>
       </div>
     </div>
   );
