@@ -17,7 +17,7 @@ const Author = () => {
     const response = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`)
     setLoading(false)
     setAuthorData(response.data)
-    setFollowersCount(authorData.followers)
+    setFollowersCount(response.data.followers)
   }
 
   function handleFollowBtn() {
