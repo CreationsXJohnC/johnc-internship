@@ -20,7 +20,9 @@ const Home = () => {
         <HotCollections />
         <NewItems />
         <TopSellers />
-        <BrowseByCategory />
+        <div data-aos="fade-right">
+          <BrowseByCategory />
+        </div>
       </div>
     </div>
   );
