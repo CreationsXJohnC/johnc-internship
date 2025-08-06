@@ -9,12 +9,26 @@ import Skeleton from "../components/UI/Skeleton";
 const Author = () => {
   const [ loading, setLoading ] = useState(false)
   const [ authorData, setAuthorData ] = useState([])
+  const [ followersCount, setFollowersCount ] = useState(0)
+  const [ isFollowing, setIsFollowing ] = useState(false)
   const {authorId} = useParams() 
   async function main() {
     setLoading(true)
     const response = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`)
     setLoading(false)
     setAuthorData(response.data)
+    setFollowersCount(authorData.followers)
+  }
+
+  function handleFollowBtn() {
+    if (isFollowing) {
+      setIsFollowing(false)
+      setFollowersCount(prev => prev - 1) 
+    }
+    else {
+      setIsFollowing(true)
+      setFollowersCount(prev => prev + 1) 
+    }
   }
 
 useEffect(() => {
@@ -61,10 +75,10 @@ useEffect(() => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">{authorData.followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
+                      <div className="profile_follower">{followersCount} followers</div>
+                      <button className="btn-main" onClick={handleFollowBtn}>
+                        { isFollowing ? "Unfollow" : "Follow" }
+                      </button>
                     </div>
                   </div>
                 </div>
