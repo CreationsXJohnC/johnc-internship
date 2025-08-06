@@ -24,7 +24,7 @@ useEffect(() => {
       
   return (
     <div id="wrapper">
-      <div className="no-bottom no-top" id="content">
+      <div className="no-bottom no-top" id="content" data-aos="fade-down">
         <div id="top"></div>
 
         <section

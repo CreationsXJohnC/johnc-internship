@@ -22,7 +22,7 @@ const AuthorItems = () => {
       }, []);
 
   return (
-    <div className="de_tab_content">
+    <div className="de_tab_content" data-aos="fade-down">
       <div className="tab-1">
         <div className="row">
           { nftCollection.map((nft, index) => (

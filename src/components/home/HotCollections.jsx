@@ -30,7 +30,7 @@ const HotCollections = () => {
 
   return (
     <section id="section-collections" className="no-bottom">
-      <div className="container">
+      <div className="container" data-aos="fade-down">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -48,7 +48,7 @@ const HotCollections = () => {
                   </Link>
                 </div>
                 <div className="nft_coll_pp">
-                  <Link to="/author">
+                  <Link to={`/author/${hotCollection.authorId}`}>
                     <img className="lazy pp-coll" src={hotCollection.authorImage} alt="" />
                   </Link>
                   <i className="fa fa-check"></i>
